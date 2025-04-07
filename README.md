@@ -26,8 +26,7 @@ Executez le prpojet avec la commande :
 ```bash
 npm start
 ```
-Le formulaire devrait être visible à l'adresse suivante :
-[http://localhost:3000](http://localhost:3000)
+*Le formulaire devrait être visible à l'adresse suivante : [http://localhost:3000](http://localhost:3000)*
 
 Pour les tests, faîtes la commande :
 ```bash

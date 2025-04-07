@@ -1,6 +1,11 @@
-export const validateNomPrenom = (value) => {
+export const validateNom = (value) => {
     const regex = /^[A-Za-zÀ-ÿ '-]+$/;
-    return regex.test(value) ? "" : "Nom/Prénom invalide";
+    return regex.test(value) ? "" : "Nom invalide";
+};
+
+export const validatePrenom = (value) => {
+    const regex = /^[A-Za-zÀ-ÿ '-]+$/;
+    return regex.test(value) ? "" : "Prénom invalide";
 };
 
 export const validateEmail = (value) => {

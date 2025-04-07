@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Inscription Utilisateur</h1>
+      <h1>Inscription utilisateur</h1>
       <Formulaire onAddUser={addUser} />
       <UserList users={users} />
       <ToastContainer closeButton={false} />

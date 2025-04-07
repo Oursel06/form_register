@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { validateNomPrenom, validateEmail, validateDateNaissance, validateCodePostal, validateVille } from '../utils/validations';
+import { validateNom, validatePrenom, validateEmail, validateDateNaissance, validateCodePostal, validateVille } from '../utils/validations';
 
 const Formulaire = ({ onAddUser }) => {
     const [nom, setNom] = useState('');
@@ -17,8 +17,8 @@ const Formulaire = ({ onAddUser }) => {
         setSubmitted(true);
 
         const newErrors = {
-            nom: validateNomPrenom(nom),
-            prenom: validateNomPrenom(prenom),
+            nom: validateNom(nom),
+            prenom: validatePrenom(prenom),
             email: validateEmail(email),
             dateNaissance: validateDateNaissance(dateNaissance),
             ville: validateVille(ville),
@@ -45,7 +45,7 @@ const Formulaire = ({ onAddUser }) => {
         }
     };
 
-    const isFormValid = !Object.values(errors).includes(false) && nom && prenom && email && dateNaissance && ville && codePostal;
+    const isFormValid = nom && prenom && email && dateNaissance && ville && codePostal;
 
     return (
         <form onSubmit={handleSubmit}>
@@ -55,6 +55,7 @@ const Formulaire = ({ onAddUser }) => {
                     type="text"
                     value={nom}
                     onChange={(e) => setNom(e.target.value)}
+                    style={{ borderColor: errors.nom ? 'red' : '' }}
                 />
                 {errors.nom && <span className="error">{errors.nom}</span>}
             </div>
@@ -65,6 +66,7 @@ const Formulaire = ({ onAddUser }) => {
                     type="text"
                     value={prenom}
                     onChange={(e) => setPrenom(e.target.value)}
+                    style={{ borderColor: errors.prenom ? 'red' : '' }}
                 />
                 {errors.prenom && <span className="error">{errors.prenom}</span>}
             </div>
@@ -75,6 +77,7 @@ const Formulaire = ({ onAddUser }) => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    style={{ borderColor: errors.email ? 'red' : '' }}
                 />
                 {errors.email && <span className="error">{errors.email}</span>}
             </div>
@@ -85,6 +88,7 @@ const Formulaire = ({ onAddUser }) => {
                     type="date"
                     value={dateNaissance}
                     onChange={(e) => setDateNaissance(e.target.value)}
+                    style={{ borderColor: errors.dateNaissance ? 'red' : '' }}
                 />
                 {errors.dateNaissance && <span className="error">{errors.dateNaissance}</span>}
             </div>
@@ -95,6 +99,7 @@ const Formulaire = ({ onAddUser }) => {
                     type="text"
                     value={ville}
                     onChange={(e) => setVille(e.target.value)}
+                    style={{ borderColor: errors.ville ? 'red' : '' }}
                 />
                 {errors.ville && <span className="error">{errors.ville}</span>}
             </div>
@@ -105,6 +110,7 @@ const Formulaire = ({ onAddUser }) => {
                     type="text"
                     value={codePostal}
                     onChange={(e) => setCodePostal(e.target.value)}
+                    style={{ borderColor: errors.codePostal ? 'red' : '' }}
                 />
                 {errors.codePostal && <span className="error">{errors.codePostal}</span>}
             </div>

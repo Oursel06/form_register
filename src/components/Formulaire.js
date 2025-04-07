@@ -1,5 +1,3 @@
-// src/components/Formulaire.js
-
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { validateNomPrenom, validateEmail, validateDateNaissance, validateCodePostal, validateVille } from '../utils/validations';
@@ -12,36 +10,39 @@ const Formulaire = ({ onAddUser }) => {
     const [ville, setVille] = useState('');
     const [codePostal, setCodePostal] = useState('');
     const [errors, setErrors] = useState({});
+    const [submitted, setSubmitted] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setSubmitted(true);
 
-        // Ajouter l'utilisateur
-        const newUser = { nom, prenom, email, dateNaissance, ville, codePostal };
-        onAddUser(newUser);
-
-        // Afficher un toaster de succès
-        toast.success("Utilisateur enregistré avec succès");
-
-        // Réinitialiser le formulaire
-        setNom('');
-        setPrenom('');
-        setEmail('');
-        setDateNaissance('');
-        setVille('');
-        setCodePostal('');
-    };
-
-    const handleBlur = () => {
-        // Validation des champs
-        setErrors({
+        const newErrors = {
             nom: validateNomPrenom(nom),
             prenom: validateNomPrenom(prenom),
             email: validateEmail(email),
             dateNaissance: validateDateNaissance(dateNaissance),
             ville: validateVille(ville),
             codePostal: validateCodePostal(codePostal),
-        });
+        };
+
+        setErrors(newErrors);
+
+        if (Object.values(newErrors).some(error => error !== '')) {
+            toast.error("Une erreur est survenue lors de l'inscription, veuillez réessayer.");
+            return;
+        } else {
+            const newUser = { nom, prenom, email, dateNaissance, ville, codePostal };
+            onAddUser(newUser);
+
+            toast.success("Utilisateur enregistré !");
+
+            setNom('');
+            setPrenom('');
+            setEmail('');
+            setDateNaissance('');
+            setVille('');
+            setCodePostal('');
+        }
     };
 
     const isFormValid = !Object.values(errors).includes(false) && nom && prenom && email && dateNaissance && ville && codePostal;
@@ -54,7 +55,6 @@ const Formulaire = ({ onAddUser }) => {
                     type="text"
                     value={nom}
                     onChange={(e) => setNom(e.target.value)}
-                    onBlur={handleBlur}
                 />
                 {errors.nom && <span className="error">{errors.nom}</span>}
             </div>
@@ -65,7 +65,6 @@ const Formulaire = ({ onAddUser }) => {
                     type="text"
                     value={prenom}
                     onChange={(e) => setPrenom(e.target.value)}
-                    onBlur={handleBlur}
                 />
                 {errors.prenom && <span className="error">{errors.prenom}</span>}
             </div>
@@ -76,7 +75,6 @@ const Formulaire = ({ onAddUser }) => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    onBlur={handleBlur}
                 />
                 {errors.email && <span className="error">{errors.email}</span>}
             </div>
@@ -87,7 +85,6 @@ const Formulaire = ({ onAddUser }) => {
                     type="date"
                     value={dateNaissance}
                     onChange={(e) => setDateNaissance(e.target.value)}
-                    onBlur={handleBlur}
                 />
                 {errors.dateNaissance && <span className="error">{errors.dateNaissance}</span>}
             </div>
@@ -98,7 +95,6 @@ const Formulaire = ({ onAddUser }) => {
                     type="text"
                     value={ville}
                     onChange={(e) => setVille(e.target.value)}
-                    onBlur={handleBlur}
                 />
                 {errors.ville && <span className="error">{errors.ville}</span>}
             </div>
@@ -109,7 +105,6 @@ const Formulaire = ({ onAddUser }) => {
                     type="text"
                     value={codePostal}
                     onChange={(e) => setCodePostal(e.target.value)}
-                    onBlur={handleBlur}
                 />
                 {errors.codePostal && <span className="error">{errors.codePostal}</span>}
             </div>

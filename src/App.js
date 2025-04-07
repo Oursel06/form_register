@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Formulaire from './components/Formulaire';
+import UserList from './components/UserList';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+  const [users, setUsers] = useState([]);
+
+  const addUser = (newUser) => {
+    setUsers([...users, newUser]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Inscription Utilisateur</h1>
+      <Formulaire onAddUser={addUser} />
+      <UserList users={users} />
+      <ToastContainer closeButton={false} />
     </div>
   );
 }

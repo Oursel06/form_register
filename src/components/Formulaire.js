@@ -11,6 +11,7 @@ const Formulaire = ({ onAddUser }) => {
     const [codePostal, setCodePostal] = useState('');
     const [errors, setErrors] = useState({});
     const [submitted, setSubmitted] = useState(false);
+    const [users, setUsers] = useState(JSON.parse(localStorage.getItem('users')) || []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -33,6 +34,12 @@ const Formulaire = ({ onAddUser }) => {
         } else {
             const newUser = { nom, prenom, email, dateNaissance, ville, codePostal };
             onAddUser(newUser);
+
+            const updatedUsers = [...users, newUser];
+            setUsers(updatedUsers);
+            localStorage.setItem('users', JSON.stringify(updatedUsers));
+
+            window.location.reload();
 
             toast.success("Utilisateur enregistré !");
 

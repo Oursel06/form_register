@@ -1,6 +1,7 @@
 # Form Register
 
-Cette application permet d'enregistrer un utilisateur via un formulaire, avec des validations sur les champs. L'utilisateur peut saisir son nom, prénom, email, date de naissance, ville, et code postal. Les données sont validées avant soumission et un message de confirmation est affiché.
+Cette application permet d'enregistrer un utilisateur via un formulaire, avec des validations sur les champs. L'utilisateur peut saisir son nom, prénom, email, date de naissance, ville, et code postal. Les données sont validées avant soumission et un message de confirmation est affiché. <br><br>
+Le projet est visible à l'adresse suivante : [https://oursel06.github.io/form_register](https://oursel06.github.io/form_register)
 
 ## Prérequis
 
@@ -22,7 +23,7 @@ Dans le projet, installez toutes les dépendances nécessaires :
 npm i
 ```
 
-Executez le prpojet avec la commande :
+Executez le projet avec la commande :
 ```bash
 npm start
 ```

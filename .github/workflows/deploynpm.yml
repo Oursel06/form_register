@@ -24,9 +24,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Increment version
+      - name: Clean Git state
         run: |
-          npm version patch -m "Upgrade to %s for reasons"  # Incrémente la version patch
+          git reset --hard         # Réinitialise tous les fichiers modifiés
+          git clean -fd            # Supprime les fichiers non suivis
+
+      - name: Increment version
+        run: npm version patch -m "Upgrade to %s "
 
       - name: Build the project
         run: npm run build

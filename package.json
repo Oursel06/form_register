@@ -1,6 +1,6 @@
 {
   "name": "form_register",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Un formulaire d'inscription React.",
   "keywords": [
     "form",

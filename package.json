@@ -26,7 +26,9 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "prepublishOnly": "npm run build"
+    "version": "npm version patch -m \"Upgrade to %s \"",
+    "prepublishOnly": "npm run build",
+    "publish": "npm publish --access public"
   },
   "eslintConfig": {
     "extends": [

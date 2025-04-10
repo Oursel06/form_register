@@ -24,18 +24,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Clean Git state
+      - name: Ensure git repository is clean
         run: |
-          git reset --hard         # Réinitialise tous les fichiers modifiés
-          git clean -fd            # Supprime les fichiers non suivis
-
-      - name: Commit changes before version bump
-        run: |
-          git add .                # Ajoute toutes les modifications
-          git commit -m "Prepare for new version" || echo "No changes to commit" # Commit les changements, ignore si aucun changement
+          git status # Voir l'état actuel du git
+          git add .  # Ajouter toutes les modifications
+          git commit -m "Prepare for new version" || echo "No changes to commit"  # Faire un commit ou ignorer si aucun changement
+          git status # Vérifier si tout est bien commit
 
       - name: Increment version
-        run: npm version patch -m "Upgrade to %s for reasons"
+        run: npm version patch -m "Upgrade to %s "
 
       - name: Build the project
         run: npm run build

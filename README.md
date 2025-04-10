@@ -27,8 +27,7 @@ Executez le projet avec la commande :
 ```bash
 npm start
 ```
-
-*Projet hébergé sur npm : [http://localhost:3000](http://localhost:3000) <br>
+*Projet hébergé sur npm : [https://www.npmjs.com/package/form_register](https://www.npmjs.com/package/form_register) <br>
 Le formulaire devrait être visible à l'adresse suivante : [http://localhost:3000](http://localhost:3000)*
 
 Pour les tests, faîtes la commande :

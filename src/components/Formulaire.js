@@ -10,6 +10,7 @@ const Formulaire = ({ onAddUser }) => {
     const [ville, setVille] = useState('');
     const [codePostal, setCodePostal] = useState('');
     const [errors, setErrors] = useState({});
+    // eslint-disable-next-line no-unused-vars
     const [submitted, setSubmitted] = useState(false);
     const [users, setUsers] = useState(JSON.parse(localStorage.getItem('users')) || []);
 

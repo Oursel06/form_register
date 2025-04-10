@@ -27,7 +27,9 @@ Executez le projet avec la commande :
 ```bash
 npm start
 ```
-*Le formulaire devrait être visible à l'adresse suivante : [http://localhost:3000](http://localhost:3000)*
+
+*Projet hébergé sur npm : [http://localhost:3000](http://localhost:3000) <br>
+Le formulaire devrait être visible à l'adresse suivante : [http://localhost:3000](http://localhost:3000)*
 
 Pour les tests, faîtes la commande :
 ```bash

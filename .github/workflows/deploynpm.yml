@@ -29,8 +29,13 @@ jobs:
           git reset --hard         # Réinitialise tous les fichiers modifiés
           git clean -fd            # Supprime les fichiers non suivis
 
+      - name: Commit changes before version bump
+        run: |
+          git add .                # Ajoute toutes les modifications
+          git commit -m "Prepare for new version" || echo "No changes to commit" # Commit les changements, ignore si aucun changement
+
       - name: Increment version
-        run: npm version patch -m "Upgrade to %s "
+        run: npm version patch -m "Upgrade to %s for reasons"
 
       - name: Build the project
         run: npm run build

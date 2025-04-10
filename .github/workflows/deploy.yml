@@ -24,10 +24,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Increment version and build the project
-        run: |
-          npm version patch -m "Upgrade to %s for reasons"  # Incrémente la version patch et crée un commit
-          npm run build  # Générez le build après l'incrémentation de la version
+      - name: Build the project
+        run: npm run build
 
       - name: Set Git identity
         run: |

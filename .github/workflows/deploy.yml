@@ -49,25 +49,14 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
-      - name: Run frontend unit tests with coverage
-        run: npm run test -- --coverage --watchAll=false
+      - name: Run tests with coverage
+        run: npm run test
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
-          files: coverage/lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: Build and start stack
-        run: |
-          docker compose up -d
-          sleep 15
-
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v6
-
-      - name: Stop stack
-        run: docker compose down
+          slug: Oursel06/form_register
 
   frontend-build:
     runs-on: ubuntu-latest

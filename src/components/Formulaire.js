@@ -75,46 +75,88 @@ const Formulaire = ({ onAddUser }) => {
     return (
         <div>
             <h2>Inscription</h2>
-            <form onSubmit={handleSubmit}>
+            <form data-testid="registration-form" onSubmit={handleSubmit}>
                 <div>
                     <label>Nom:</label>
-                    <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} style={{ borderColor: errors.nom ? 'red' : '' }} />
+                    <input
+                        data-testid="register-nom"
+                        type="text"
+                        value={nom}
+                        onChange={(e) => setNom(e.target.value)}
+                        style={{ borderColor: errors.nom ? 'red' : '' }}
+                    />
                     {errors.nom && <span className="error">{errors.nom}</span>}
                 </div>
 
                 <div>
                     <label>Prénom:</label>
-                    <input type="text" value={prenom} onChange={(e) => setPrenom(e.target.value)} style={{ borderColor: errors.prenom ? 'red' : '' }} />
+                    <input
+                        data-testid="register-prenom"
+                        type="text"
+                        value={prenom}
+                        onChange={(e) => setPrenom(e.target.value)}
+                        style={{ borderColor: errors.prenom ? 'red' : '' }}
+                    />
                     {errors.prenom && <span className="error">{errors.prenom}</span>}
                 </div>
 
                 <div>
                     <label>Email:</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} style={{ borderColor: errors.email ? 'red' : '' }} />
+                    <input
+                        data-testid="register-email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        style={{ borderColor: errors.email ? 'red' : '' }}
+                    />
                     {errors.email && <span className="error">{errors.email}</span>}
                 </div>
 
                 <div>
                     <label>Mot de passe:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ borderColor: errors.password ? 'red' : '' }} />
+                    <input
+                        data-testid="register-password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        style={{ borderColor: errors.password ? 'red' : '' }}
+                    />
                     {errors.password && <span className="error">{errors.password}</span>}
                 </div>
 
                 <div>
                     <label>Date de naissance:</label>
-                    <input type="date" value={dateNaissance} onChange={(e) => setDateNaissance(e.target.value)} style={{ borderColor: errors.dateNaissance ? 'red' : '' }} />
+                    <input
+                        data-testid="register-dateNaissance"
+                        type="date"
+                        value={dateNaissance}
+                        onChange={(e) => setDateNaissance(e.target.value)}
+                        style={{ borderColor: errors.dateNaissance ? 'red' : '' }}
+                    />
                     {errors.dateNaissance && <span className="error">{errors.dateNaissance}</span>}
                 </div>
 
                 <div>
                     <label>Ville:</label>
-                    <input type="text" value={ville} onChange={(e) => setVille(e.target.value)} style={{ borderColor: errors.ville ? 'red' : '' }} />
+                    <input
+                        data-testid="register-ville"
+                        type="text"
+                        value={ville}
+                        onChange={(e) => setVille(e.target.value)}
+                        style={{ borderColor: errors.ville ? 'red' : '' }}
+                    />
                     {errors.ville && <span className="error">{errors.ville}</span>}
                 </div>
 
                 <div>
                     <label>Code postal:</label>
-                    <input type="text" value={codePostal} onChange={(e) => setCodePostal(e.target.value)} style={{ borderColor: errors.codePostal ? 'red' : '' }} />
+                    <input
+                        data-testid="register-codePostal"
+                        type="text"
+                        value={codePostal}
+                        onChange={(e) => setCodePostal(e.target.value)}
+                        style={{ borderColor: errors.codePostal ? 'red' : '' }}
+                    />
                     {errors.codePostal && <span className="error">{errors.codePostal}</span>}
                 </div>
 
@@ -137,7 +179,7 @@ const Formulaire = ({ onAddUser }) => {
                         )}
                     </button>
 
-                    <button type="button" onClick={() => setShowLogin(true)}>
+                    <button type="button" data-testid="switch-to-login" onClick={() => setShowLogin(true)}>
                         Connexion
                     </button>
                 </div>
@@ -152,7 +194,6 @@ const Formulaire = ({ onAddUser }) => {
                 </style>
             </form>
         </div>
-    
     );
 };
 

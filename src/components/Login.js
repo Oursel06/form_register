@@ -6,10 +6,12 @@ const LoginForm = ({ onBack, onLoginSuccess }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [errorVisible, setErrorVisible] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+        setErrorVisible(false);
         try {
             const response = await login(email, password);
             const token = response.access_token;
@@ -17,6 +19,7 @@ const LoginForm = ({ onBack, onLoginSuccess }) => {
             toast.success("Connexion réussie");
             onLoginSuccess(token);
         } catch (error) {
+            setErrorVisible(true);
             toast.error("Email ou mot de passe incorrect");
         }
         setIsLoading(false);
@@ -25,10 +28,11 @@ const LoginForm = ({ onBack, onLoginSuccess }) => {
     return (
         <div className="login-container">
             <h2>Connexion</h2>
-            <form onSubmit={handleSubmit}>
+            <form data-testid="login-form" onSubmit={handleSubmit}>
                 <div>
                     <label>Email:</label>
                     <input
+                        data-testid="login-email"
                         type="email"
                         required
                         value={email}
@@ -38,24 +42,40 @@ const LoginForm = ({ onBack, onLoginSuccess }) => {
                 <div>
                     <label>Mot de passe:</label>
                     <input
+                        data-testid="login-password"
                         type="password"
                         required
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                     />
                 </div>
-                <div className="button-group">
+
+                {errorVisible && (
+                    <div data-testid="login-error" style={{ color: 'red', marginTop: 8 }}>
+                        Email ou mot de passe incorrect
+                    </div>
+                )}
+
+                <div className="button-group" style={{ marginTop: 15 }}>
                     <button type="submit" disabled={isLoading}>
                         Se connecter
                         {isLoading && <MiniLoader />}
                     </button>
-                    <button type="button" onClick={onBack}>
+                    <button type="button" onClick={onBack} style={{ marginLeft: 10 }}>
                         Retour
                     </button>
                 </div>
             </form>
+            <style>
+                {`
+                @keyframes spin {
+                    0% { transform: rotate(0deg);}
+                    100% { transform: rotate(360deg);}
+                }
+                `}
+            </style>
         </div>
-    );    
+    );
 };
 
 const MiniLoader = () => (

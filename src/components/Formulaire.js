@@ -56,7 +56,7 @@ const Formulaire = ({ onAddUser }) => {
 
             setIsLoading(false)
         } catch (error) {
-            toast.error("Erreur lors de l'enregistrement. Email déjà utilisé ?");
+            toast.error("Erreur lors de l'enregistrement. Email déjà utilisé");
             setIsLoading(false);
         }
     };

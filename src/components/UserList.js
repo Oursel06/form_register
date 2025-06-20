@@ -7,6 +7,7 @@ const UserList = () => {
     const [users, setUsers] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const [currentUserEmail, setCurrentUserEmail] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -17,11 +18,14 @@ const UserList = () => {
         }
 
         const fetchUsers = async () => {
+            setLoading(true);
             try {
                 const userList = await getAllUsers();
                 setUsers(userList);
             } catch (error) {
                 toast.error("Une erreur est survenue lors de la récupération des utilisateurs, veuillez réessayer.");
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -34,18 +38,26 @@ const UserList = () => {
         try {
             const token = localStorage.getItem('token');
             await deleteUser(userId, token);
-            toast.error(`Utilisateur ${userId} supprimé.`);
+            toast.success(`Utilisateur N°${userId} supprimé.`);
             setUsers(users.filter(user => user.id !== userId));
         } catch (error) {
             toast.error("Erreur lors de la suppression de l'utilisateur.");
         }
     };
 
+    if (loading) {
+        return (
+            <div style={{ padding: '20px', textAlign: 'center' }}>
+                <div className="spinner"></div>
+            </div>
+        );
+    }
+
     return (
         <div className='user-list'>
             <h2>Liste des utilisateurs</h2>
             <div className="user-cards-container">
-                {users && users.length > 0 ? (
+                {users.length > 0 ? (
                     users.map((user) => (
                         <div className="user-card" key={user.id}>
                             <div className="name">
@@ -68,7 +80,13 @@ const UserList = () => {
                                 <div className="data">{user.postal_code || user.codePostal}</div>
                             </div>
                             {isAdmin && user.email !== currentUserEmail && (
-                                <button onClick={() => handleDelete(user.id)}>Supprimer</button>
+                                <button
+                                    className="delete-btn"
+                                    onClick={() => handleDelete(user.id)}
+                                    aria-label={`Supprimer ${user.firstname || user.nom}`}
+                                >
+                                    x
+                              </button>
                             )}
                         </div>
                     ))

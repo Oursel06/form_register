@@ -1,26 +1,59 @@
 import React, { useEffect, useState } from 'react';
+import { getAllUsers, deleteUser } from '../api/userService';
+import { jwtDecode } from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [currentUserEmail, setCurrentUserEmail] = useState('');
 
     useEffect(() => {
-        const storedUsers = JSON.parse(localStorage.getItem('users'));
-        setUsers(storedUsers);
+        const token = localStorage.getItem('token');
+        if (token) {
+            const decoded = jwtDecode(token);
+            setIsAdmin(decoded.is_admin);
+            setCurrentUserEmail(decoded.email);
+        }
+
+        const fetchUsers = async () => {
+            try {
+                const userList = await getAllUsers();
+                setUsers(userList);
+            } catch (error) {
+                toast.error("Une erreur est survenue lors de la récupération des utilisateurs, veuillez réessayer.");
+            }
+        };
+
+        fetchUsers();
     }, []);
+
+    const handleDelete = async (userId) => {
+        if (!window.confirm("Voulez-vous vraiment supprimer cet utilisateur ?")) return;
+
+        try {
+            const token = localStorage.getItem('token');
+            await deleteUser(userId, token);
+            toast.error(`Utilisateur ${userId} supprimé.`);
+            setUsers(users.filter(user => user.id !== userId));
+        } catch (error) {
+            toast.error("Erreur lors de la suppression de l'utilisateur.");
+        }
+    };
 
     return (
         <div className='user-list'>
             <h2>Liste des utilisateurs</h2>
             <div className="user-cards-container">
-                {users != null && users.length > 0 ? (
-                    users.map((user, index) => (
-                        <div className="user-card" key={index}>
+                {users && users.length > 0 ? (
+                    users.map((user) => (
+                        <div className="user-card" key={user.id}>
                             <div className="name">
-                                {user.nom} {user.prenom}
+                                {user.firstname || user.nom} {user.lastname || user.prenom}
                             </div>
                             <div className="user-info">
                                 <label>Date de naissance:</label>
-                                <div className="data">{user.dateNaissance}</div>
+                                <div className="data">{user.birthdate || user.dateNaissance}</div>
                             </div>
                             <div className="user-info">
                                 <label>Email:</label>
@@ -28,12 +61,15 @@ const UserList = () => {
                             </div>
                             <div className="user-info">
                                 <label>Ville:</label>
-                                <div className="data">{user.ville}</div>
+                                <div className="data">{user.city || user.ville}</div>
                             </div>
                             <div className="user-info">
                                 <label>Code postal:</label>
-                                <div className="data">{user.codePostal}</div>
+                                <div className="data">{user.postal_code || user.codePostal}</div>
                             </div>
+                            {isAdmin && user.email !== currentUserEmail && (
+                                <button onClick={() => handleDelete(user.id)}>Supprimer</button>
+                            )}
                         </div>
                     ))
                 ) : (

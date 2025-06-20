@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { validateNom, validatePrenom, validateEmail, validateDateNaissance, validateCodePostal, validateVille } from '../utils/validations';
+import { createUser } from '../api/userService';
+import LoginForm from './Login';
 
 const Formulaire = ({ onAddUser }) => {
     const [nom, setNom] = useState('');
@@ -9,14 +11,13 @@ const Formulaire = ({ onAddUser }) => {
     const [dateNaissance, setDateNaissance] = useState('');
     const [ville, setVille] = useState('');
     const [codePostal, setCodePostal] = useState('');
+    const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
-    // eslint-disable-next-line no-unused-vars
-    const [submitted, setSubmitted] = useState(false);
-    const [users, setUsers] = useState(JSON.parse(localStorage.getItem('users')) || []);
+    const [isLoading, setIsLoading] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setSubmitted(true);
 
         const newErrors = {
             nom: validateNom(nom),
@@ -25,6 +26,7 @@ const Formulaire = ({ onAddUser }) => {
             dateNaissance: validateDateNaissance(dateNaissance),
             ville: validateVille(ville),
             codePostal: validateCodePostal(codePostal),
+            password: password.length < 6 ? 'Le mot de passe doit faire au moins 6 caractères' : '',
         };
 
         setErrors(newErrors);
@@ -32,99 +34,125 @@ const Formulaire = ({ onAddUser }) => {
         if (Object.values(newErrors).some(error => error !== '')) {
             toast.error("Une erreur est survenue lors de l'inscription, veuillez réessayer.");
             return;
-        } else {
-            const newUser = { nom, prenom, email, dateNaissance, ville, codePostal };
-            onAddUser(newUser);
+        }
 
-            const updatedUsers = [...users, newUser];
-            setUsers(updatedUsers);
-            localStorage.setItem('users', JSON.stringify(updatedUsers));
+        setIsLoading(true);
 
-            window.location.reload();
+        const newUser = { nom, prenom, email, dateNaissance, ville, codePostal, password };
 
+        try {
+            const savedUser = await createUser(newUser);
+            onAddUser(savedUser);
             toast.success("Utilisateur enregistré !");
 
+            // Réinitialisation du formulaire
             setNom('');
             setPrenom('');
             setEmail('');
             setDateNaissance('');
             setVille('');
             setCodePostal('');
+            setPassword('');
+
+            setIsLoading(false)
+        } catch (error) {
+            toast.error("Erreur lors de l'enregistrement. Email déjà utilisé ?");
+            setIsLoading(false);
         }
     };
 
-    const isFormValid = nom && prenom && email && dateNaissance && ville && codePostal;
+    const isFormValid = nom && prenom && email && dateNaissance && ville && codePostal && password.length >= 6;
+
+    const handleLoginSuccess = (token) => {
+        localStorage.setItem("token", token);
+        window.location.reload();
+    };
+
+    if (showLogin) {
+        return <LoginForm onBack={() => setShowLogin(false)} onLoginSuccess={handleLoginSuccess} />;
+    }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Nom:</label>
-                <input
-                    type="text"
-                    value={nom}
-                    onChange={(e) => setNom(e.target.value)}
-                    style={{ borderColor: errors.nom ? 'red' : '' }}
-                />
-                {errors.nom && <span className="error">{errors.nom}</span>}
-            </div>
+        <div>
+            <h2>Inscription</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>Nom:</label>
+                    <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} style={{ borderColor: errors.nom ? 'red' : '' }} />
+                    {errors.nom && <span className="error">{errors.nom}</span>}
+                </div>
 
-            <div>
-                <label>Prénom:</label>
-                <input
-                    type="text"
-                    value={prenom}
-                    onChange={(e) => setPrenom(e.target.value)}
-                    style={{ borderColor: errors.prenom ? 'red' : '' }}
-                />
-                {errors.prenom && <span className="error">{errors.prenom}</span>}
-            </div>
+                <div>
+                    <label>Prénom:</label>
+                    <input type="text" value={prenom} onChange={(e) => setPrenom(e.target.value)} style={{ borderColor: errors.prenom ? 'red' : '' }} />
+                    {errors.prenom && <span className="error">{errors.prenom}</span>}
+                </div>
 
-            <div>
-                <label>Email:</label>
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    style={{ borderColor: errors.email ? 'red' : '' }}
-                />
-                {errors.email && <span className="error">{errors.email}</span>}
-            </div>
+                <div>
+                    <label>Email:</label>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} style={{ borderColor: errors.email ? 'red' : '' }} />
+                    {errors.email && <span className="error">{errors.email}</span>}
+                </div>
 
-            <div>
-                <label>Date de naissance:</label>
-                <input
-                    type="date"
-                    value={dateNaissance}
-                    onChange={(e) => setDateNaissance(e.target.value)}
-                    style={{ borderColor: errors.dateNaissance ? 'red' : '' }}
-                />
-                {errors.dateNaissance && <span className="error">{errors.dateNaissance}</span>}
-            </div>
+                <div>
+                    <label>Mot de passe:</label>
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ borderColor: errors.password ? 'red' : '' }} />
+                    {errors.password && <span className="error">{errors.password}</span>}
+                </div>
 
-            <div>
-                <label>Ville:</label>
-                <input
-                    type="text"
-                    value={ville}
-                    onChange={(e) => setVille(e.target.value)}
-                    style={{ borderColor: errors.ville ? 'red' : '' }}
-                />
-                {errors.ville && <span className="error">{errors.ville}</span>}
-            </div>
+                <div>
+                    <label>Date de naissance:</label>
+                    <input type="date" value={dateNaissance} onChange={(e) => setDateNaissance(e.target.value)} style={{ borderColor: errors.dateNaissance ? 'red' : '' }} />
+                    {errors.dateNaissance && <span className="error">{errors.dateNaissance}</span>}
+                </div>
 
-            <div>
-                <label>Code postal:</label>
-                <input
-                    type="text"
-                    value={codePostal}
-                    onChange={(e) => setCodePostal(e.target.value)}
-                    style={{ borderColor: errors.codePostal ? 'red' : '' }}
-                />
-                {errors.codePostal && <span className="error">{errors.codePostal}</span>}
-            </div>
+                <div>
+                    <label>Ville:</label>
+                    <input type="text" value={ville} onChange={(e) => setVille(e.target.value)} style={{ borderColor: errors.ville ? 'red' : '' }} />
+                    {errors.ville && <span className="error">{errors.ville}</span>}
+                </div>
 
-            <button type="submit" disabled={!isFormValid}>Valider</button>
-        </form>
+                <div>
+                    <label>Code postal:</label>
+                    <input type="text" value={codePostal} onChange={(e) => setCodePostal(e.target.value)} style={{ borderColor: errors.codePostal ? 'red' : '' }} />
+                    {errors.codePostal && <span className="error">{errors.codePostal}</span>}
+                </div>
+
+                <div style={{ marginTop: 20, display: 'flex', gap: 10 }}>
+                    <button type="submit" disabled={!isFormValid || isLoading}>
+                        S'inscrire
+                        {isLoading && (
+                            <span
+                                style={{
+                                    display: 'inline-block',
+                                    marginLeft: 8,
+                                    width: 16,
+                                    height: 16,
+                                    border: '2px solid #fff',
+                                    borderTop: '2px solid transparent',
+                                    borderRadius: '50%',
+                                    animation: 'spin 1s linear infinite',
+                                }}
+                            />
+                        )}
+                    </button>
+
+                    <button type="button" onClick={() => setShowLogin(true)}>
+                        Connexion
+                    </button>
+                </div>
+
+                <style>
+                    {`
+                    @keyframes spin {
+                        0% { transform: rotate(0deg);}
+                        100% { transform: rotate(360deg);}
+                    }
+                `}
+                </style>
+            </form>
+        </div>
+    
     );
 };
 

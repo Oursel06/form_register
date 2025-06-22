@@ -1,6 +1,6 @@
 {
   "name": "form_register",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Un formulaire d'inscription React.",
   "keywords": [
     "form",
@@ -27,7 +27,7 @@
     "test": "jest --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d build --repo https://x-access-token:${GITHUB_TOKEN}@github.com/Oursel06/form_register.git",
     "prepublishOnly": "npm run build",
     "cy:open": "cypress open",
     "cy:run:dev": "cypress run --config baseUrl=http://localhost:3000",

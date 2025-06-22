@@ -2,8 +2,8 @@ name: CI/CD Pipeline Backend + Frontend
 
 on:
   push:
-    tags:
-      - '*.*.*'
+    branches:
+      - main
 
 jobs:
   backend-test:

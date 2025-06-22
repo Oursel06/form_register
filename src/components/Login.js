@@ -20,6 +20,7 @@ const LoginForm = ({ onBack, onLoginSuccess }) => {
             onLoginSuccess(token);
         } catch (error) {
             setErrorVisible(true);
+            console.error("Login error:", error);
             toast.error("Email ou mot de passe incorrect");
         }
         setIsLoading(false);

@@ -55,9 +55,18 @@ const LoginForm = () => {
                         Se connecter
                         {isLoading && <MiniLoader />}
                     </button>
-                    <button type="button" onClick={() => navigate('/form_register/register')} style={{ marginLeft: 10 }}>
-                        S'identifier
-                    </button>
+                    <p style={{ marginTop: 12, fontSize: '0.9rem' }}>
+                        Pas de compte ?{' '}
+                        <span
+                            className="signup-link"
+                            onClick={() => navigate('/form_register/register')}
+                            role="link"
+                            tabIndex={0}
+                            onKeyDown={(e) => { if (e.key === 'Enter') navigate('/form_register/register'); }}
+                        >
+                            M'inscrire
+                        </span>
+                    </p>
                 </div>
             </form>
         </div>

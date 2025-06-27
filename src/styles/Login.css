@@ -1,7 +1,7 @@
 .login-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 30px 25px;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 1px 40px;
     background-color: #f9fbfc;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -10,7 +10,7 @@
 }
 
 .login-container h2 {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     color: #0079bf;
     text-align: center;
     font-weight: 700;
@@ -46,8 +46,9 @@
 
 .login-container .button-group {
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
     align-items: center;
+    gap: 12px;
 }
 
 .login-container button {
@@ -73,22 +74,23 @@
     background-color: #005f8c;
 }
 
-.login-container button+button {
-    background-color: #e0e0e0;
-    color: #333;
-    margin-left: 12px;
-    transition: background-color 0.3s ease;
-}
-
-.login-container button+button:hover {
-    background-color: #c7c7c7;
-}
-
 .login-container [data-testid="login-error"] {
     color: #d93025;
     font-weight: 600;
     font-size: 0.9rem;
     margin-top: 8px;
+}
+
+.signup-link {
+    color: #0079bf;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.signup-link:hover,
+.signup-link:focus {
+    color: #005f8c;
+    outline: none;
 }
 
 @keyframes spin {

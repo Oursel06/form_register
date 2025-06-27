@@ -10,13 +10,6 @@ const PostList = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            const decoded = jwtDecode(token);
-            setIsAdmin(decoded.is_admin);
-            setCurrentUserId(decoded.user_id);
-        }
-
         const fetchPosts = async () => {
             setLoading(true);
             try {
@@ -28,7 +21,6 @@ const PostList = () => {
                 setLoading(false);
             }
         };
-
         fetchPosts();
     }, []);
 

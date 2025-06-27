@@ -83,9 +83,9 @@ const Formulaire = () => {
                         type="text"
                         value={nom}
                         onChange={(e) => setNom(e.target.value)}
-                        style={{ borderColor: errors.nom ? 'red' : '' }}
+                        style={{ borderColor: errors.firstname ? 'red' : '' }}
                     />
-                    {errors.nom && <span className="error">{errors.nom}</span>}
+                    {errors.firstname && <span className="error">{errors.firstname}</span>}
                 </div>
 
                 <div>
@@ -95,9 +95,9 @@ const Formulaire = () => {
                         type="text"
                         value={prenom}
                         onChange={(e) => setPrenom(e.target.value)}
-                        style={{ borderColor: errors.prenom ? 'red' : '' }}
+                        style={{ borderColor: errors.lastname ? 'red' : '' }}
                     />
-                    {errors.prenom && <span className="error">{errors.prenom}</span>}
+                    {errors.lastname && <span className="error">{errors.lastname}</span>}
                 </div>
 
                 <div>
@@ -160,7 +160,7 @@ const Formulaire = () => {
                     {errors.codePostal && <span className="error">{errors.codePostal}</span>}
                 </div>
 
-                <div style={{ marginTop: 20, display: 'flex', gap: 10 }}>
+                <div className="button-group" style={{ marginTop: 15 }}>
                     <button type="submit" disabled={!isFormValid || isLoading}>
                         S'inscrire
                         {isLoading && (
@@ -179,9 +179,18 @@ const Formulaire = () => {
                         )}
                     </button>
 
-                    <button type="button" data-testid="switch-to-login" onClick={() => navigate('/form_register/login')}>
-                        Connexion
-                    </button>
+                    <p style={{ marginTop: 12, fontSize: '0.9rem' }}>
+                        Déjà inscrit ?{' '}
+                        <span
+                            className="login-link"
+                            onClick={() => navigate('/form_register/login')}
+                            role="link"
+                            tabIndex={0}
+                            onKeyDown={(e) => { if (e.key === 'Enter') navigate('/form_register/login'); }}
+                        >
+                            Me connecter
+                        </span>
+                    </p>
                 </div>
 
                 <style>

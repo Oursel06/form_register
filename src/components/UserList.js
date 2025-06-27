@@ -86,7 +86,7 @@ const UserList = () => {
                                                 <button
                                                     className="delete-btn"
                                                     onClick={() => handleDelete(user.id)}
-                                                    aria-label={`Supprimer ${user.firstname || user.nom}`}
+                                                    aria-label={`Supprimer ${user.firstname}`}
                                                 >
                                                     <img
                                                         width={20}
@@ -112,7 +112,7 @@ const UserList = () => {
                         .map(user => (
                             <div className="user-card" key={user.id}>
                                 <div className="name">
-                                    {user.firstname || user.nom} {user.lastname || user.prenom}
+                                    {user.firstname} {user.lastname}
                                 </div>
                                 <div className="user-info">
                                     <label>Date de naissance:</label>

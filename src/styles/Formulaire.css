@@ -1,7 +1,7 @@
 .formulaire-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 30px 25px;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 1px 40px;
     background-color: #f9fbfc;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -10,7 +10,7 @@
 }
 
 .formulaire-container h2 {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     color: #0079bf;
     text-align: center;
     font-weight: 700;
@@ -52,6 +52,13 @@
     margin-top: 6px;
 }
 
+.formulaire-container .button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
 .formulaire-container button {
     background-color: #0079bf;
     color: white;
@@ -75,13 +82,16 @@
     background-color: #005f8c;
 }
 
-.formulaire-container button[type="button"] {
-    background-color: #e0e0e0;
-    color: #333;
+.login-link {
+    color: #0079bf;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
-.formulaire-container button[type="button"]:hover {
-    background-color: #c7c7c7;
+.login-link:hover,
+.login-link:focus {
+    color: #005f8c;
+    outline: none;
 }
 
 @keyframes spin {

@@ -1,0 +1,103 @@
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px 25px;
+    background-color: #f9fbfc;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.login-container h2 {
+    margin-bottom: 25px;
+    color: #0079bf;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.login-container form>div {
+    margin-bottom: 18px;
+}
+
+.login-container label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    width: 90%;
+    padding: 10px 12px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.login-container input[type="email"]:focus,
+.login-container input[type="password"]:focus {
+    border-color: #0079bf;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 121, 191, 0.5);
+}
+
+.login-container .button-group {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.login-container button {
+    background-color: #0079bf;
+    color: white;
+    border: none;
+    padding: 11px 22px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.login-container button:disabled {
+    background-color: #8ab8d6;
+    cursor: not-allowed;
+}
+
+.login-container button:hover:not(:disabled) {
+    background-color: #005f8c;
+}
+
+.login-container button+button {
+    background-color: #e0e0e0;
+    color: #333;
+    margin-left: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.login-container button+button:hover {
+    background-color: #c7c7c7;
+}
+
+.login-container [data-testid="login-error"] {
+    color: #d93025;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 8px;
+}
+
+/* Loader animation (if MiniLoader uses this spin animation) */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

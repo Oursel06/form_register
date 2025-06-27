@@ -1,10 +1,16 @@
 import axios from 'axios';
 
-const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+export const apiUSer = axios.create({
+    baseURL: process.env.REACT_APP_API_URL_USER,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
-export default api;
+export const apiPost = axios.create({
+    baseURL: process.env.REACT_APP_API_URL_POST,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+

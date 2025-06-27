@@ -1,70 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import LoginForm from './components/Login';
 import Formulaire from './components/Formulaire';
-import UserList from './components/UserList';
+import Home from './components/Home';
+import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getAllUsers } from './api/userService';
-import { jwtDecode } from "jwt-decode";
-import { toast } from 'react-toastify';
 
 function App() {
-  const [users, setUsers] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [username, setUsername] = useState(null);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decoded = jwtDecode(token);
-      setCurrentUser(decoded);
-      fetchUsers();
-    }
-  }, []);
-
-  const fetchUsers = async () => {
-    try {
-      const data = await getAllUsers();
-      setUsers(data);
-    } catch (error) {
-      toast.error("Une erreur est survenue lors de la récupération des utilisateurs, veuillez réessayer.");
-    }
-  };
-
-  const addUser = (newUser) => {
-    setUsers(prev => [...prev, newUser]);
+  const handleLogin = (name) => {
+    setUsername(name);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    setCurrentUser(null);
-    window.location.reload();
+    setUsername(null);
+    localStorage.removeItem('token');
   };
 
   return (
-    <div className="App">
-      {currentUser ? (
-        <>
-          <div className="navbar">
-            <div className="navbar-left">
-              Bonjour <span className="username">{currentUser.email}</span>
-            </div>
-            <div className="navbar-right">
-              <button onClick={handleLogout} className="logout-button">
-                Se déconnecter
-              </button>
-            </div>
-          </div>
+    <>
+      <ToastContainer />
+      <Routes>
+        <Route path="/" element={<Navigate to="/form_register/login" replace />} />
 
-          <UserList users={users} isAdmin={currentUser.is_admin} onUserDeleted={fetchUsers} />
-        </>      
-      ) : (
-        <>
-          <Formulaire onAddUser={addUser} />
-        </>
-      )}
+        <Route
+          path="/form_register/login"
+          element={<LoginForm onLogin={handleLogin} />}
+        />
 
-      <ToastContainer closeButton={false} />
-    </div>
+        <Route path="/form_register/register" element={<Formulaire />} />
+
+        <Route
+          path="/form_register/home"
+          element={
+            username ? (
+              <Home username={username} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/form_register/login" replace />
+            )
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/form_register/login" replace />} />
+      </Routes>
+    </>
   );
 }
 

@@ -31,5 +31,5 @@ jobs:
         env:
           CI: true
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+          REACT_APP_API_URL_USER: ${{ secrets.REACT_APP_API_URL_USER }}
         run: npm run deploy

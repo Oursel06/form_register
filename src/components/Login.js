@@ -1,29 +1,33 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { login } from "../api/userService";
+import { useNavigate } from 'react-router-dom';
+import '../styles/Login.css'
 
 const LoginForm = ({ onBack, onLoginSuccess }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [errorVisible, setErrorVisible] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        setErrorVisible(false);
         try {
             const response = await login(email, password);
             const token = response.access_token;
             localStorage.setItem("token", token);
-            toast.success("Connexion réussie");
             onLoginSuccess(token);
+            navigate("/form_register/home");
         } catch (error) {
-            setErrorVisible(true);
             console.error("Login error:", error);
             toast.error("Email ou mot de passe incorrect");
         }
         setIsLoading(false);
+    };
+
+    const handleInscription = () => {
+        navigate('/form_register/register');
     };
 
     return (
@@ -51,30 +55,16 @@ const LoginForm = ({ onBack, onLoginSuccess }) => {
                     />
                 </div>
 
-                {errorVisible && (
-                    <div data-testid="login-error" style={{ color: 'red', marginTop: 8 }}>
-                        Email ou mot de passe incorrect
-                    </div>
-                )}
-
                 <div className="button-group" style={{ marginTop: 15 }}>
                     <button type="submit" disabled={isLoading}>
                         Se connecter
                         {isLoading && <MiniLoader />}
                     </button>
-                    <button type="button" onClick={onBack} style={{ marginLeft: 10 }}>
-                        Retour
+                    <button type="button" onClick={handleInscription} style={{ marginLeft: 10 }}>
+                        S'identifier
                     </button>
                 </div>
             </form>
-            <style>
-                {`
-                @keyframes spin {
-                    0% { transform: rotate(0deg);}
-                    100% { transform: rotate(360deg);}
-                }
-                `}
-            </style>
         </div>
     );
 };

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { validateNom, validatePrenom, validateEmail, validateDateNaissance, validateCodePostal, validateVille } from '../utils/validations';
 import { createUser } from '../api/userService';
-import LoginForm from './Login';
+import { useNavigate } from 'react-router-dom';
+import '../styles/Formulaire.css';
 
 const Formulaire = ({ onAddUser }) => {
     const [nom, setNom] = useState('');
@@ -14,7 +15,7 @@ const Formulaire = ({ onAddUser }) => {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-    const [showLogin, setShowLogin] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -56,24 +57,16 @@ const Formulaire = ({ onAddUser }) => {
 
             setIsLoading(false)
         } catch (error) {
-            toast.error("Erreur lors de l'enregistrement. Email déjà utilisé");
+            console.error("Erreur lors de l'enregistrement de l'utilisateur:", error);
+            toast.error("Erreur lors de l'enregistrement.");
             setIsLoading(false);
         }
     };
 
     const isFormValid = nom && prenom && email && dateNaissance && ville && codePostal && password.length >= 6;
 
-    const handleLoginSuccess = (token) => {
-        localStorage.setItem("token", token);
-        window.location.reload();
-    };
-
-    if (showLogin) {
-        return <LoginForm onBack={() => setShowLogin(false)} onLoginSuccess={handleLoginSuccess} />;
-    }
-
     return (
-        <div>
+        <div className="formulaire-container">
             <h2>Inscription</h2>
             <form data-testid="registration-form" onSubmit={handleSubmit}>
                 <div>
@@ -179,7 +172,7 @@ const Formulaire = ({ onAddUser }) => {
                         )}
                     </button>
 
-                    <button type="button" data-testid="switch-to-login" onClick={() => setShowLogin(true)}>
+                    <button type="button" data-testid="switch-to-login" onClick={() => navigate('/form_register/login')}>
                         Connexion
                     </button>
                 </div>

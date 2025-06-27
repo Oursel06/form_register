@@ -1,0 +1,107 @@
+.formulaire-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px 25px;
+    background-color: #f9fbfc;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.formulaire-container h2 {
+    margin-bottom: 25px;
+    color: #0079bf;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.formulaire-container form>div {
+    margin-bottom: 18px;
+}
+
+.formulaire-container label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.formulaire-container input[type="text"],
+.formulaire-container input[type="email"],
+.formulaire-container input[type="password"],
+.formulaire-container input[type="date"] {
+    width: 90%;
+    padding: 10px 12px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.formulaire-container input:focus {
+    border-color: #0079bf;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 121, 191, 0.5);
+}
+
+.formulaire-container .error {
+    color: #d93025;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 6px;
+}
+
+.formulaire-container button {
+    background-color: #0079bf;
+    color: white;
+    border: none;
+    padding: 11px 22px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.formulaire-container button:disabled {
+    background-color: #8ab8d6;
+    cursor: not-allowed;
+}
+
+.formulaire-container button:hover:not(:disabled) {
+    background-color: #005f8c;
+}
+
+.formulaire-container button[type="button"] {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.formulaire-container button[type="button"]:hover {
+    background-color: #c7c7c7;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .formulaire-container {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    .formulaire-container input,
+    .formulaire-container button {
+        font-size: 16px;
+    }
+}

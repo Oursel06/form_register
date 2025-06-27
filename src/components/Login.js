@@ -4,7 +4,7 @@ import { login } from "../api/userService";
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css'
 
-const LoginForm = ({ onBack, onLoginSuccess }) => {
+const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -17,17 +17,12 @@ const LoginForm = ({ onBack, onLoginSuccess }) => {
             const response = await login(email, password);
             const token = response.access_token;
             localStorage.setItem("token", token);
-            onLoginSuccess(token);
             navigate("/form_register/home");
         } catch (error) {
             console.error("Login error:", error);
             toast.error("Email ou mot de passe incorrect");
         }
         setIsLoading(false);
-    };
-
-    const handleInscription = () => {
-        navigate('/form_register/register');
     };
 
     return (
@@ -60,7 +55,7 @@ const LoginForm = ({ onBack, onLoginSuccess }) => {
                         Se connecter
                         {isLoading && <MiniLoader />}
                     </button>
-                    <button type="button" onClick={handleInscription} style={{ marginLeft: 10 }}>
+                    <button type="button" onClick={() => navigate('/form_register/register')} style={{ marginLeft: 10 }}>
                         S'identifier
                     </button>
                 </div>

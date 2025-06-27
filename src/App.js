@@ -29,6 +29,8 @@ function App() {
           element={<LoginForm onLogin={handleLogin} />}
         />
 
+        <Route path="/form_register/home" element={<Home />} />
+
         <Route path="/form_register/register" element={<Formulaire />} />
 
         <Route

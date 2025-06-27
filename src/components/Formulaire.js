@@ -5,7 +5,7 @@ import { createUser } from '../api/userService';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Formulaire.css';
 
-const Formulaire = ({ onAddUser }) => {
+const Formulaire = () => {
     const [nom, setNom] = useState('');
     const [prenom, setPrenom] = useState('');
     const [email, setEmail] = useState('');
@@ -39,11 +39,18 @@ const Formulaire = ({ onAddUser }) => {
 
         setIsLoading(true);
 
-        const newUser = { nom, prenom, email, dateNaissance, ville, codePostal, password };
+        const newUser = {
+            firstname: prenom,
+            lastname: nom,
+            email,
+            birthdate: dateNaissance,
+            city: ville,
+            postal_code: codePostal,
+            password,
+          };
 
         try {
-            const savedUser = await createUser(newUser);
-            onAddUser(savedUser);
+            await createUser(newUser);
             toast.success("Utilisateur enregistré !");
 
             // Réinitialisation du formulaire

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const apiUSer = axios.create({
+export const apiUser = axios.create({
     baseURL: 'https://form-register-back.vercel.app/api',
     headers: {
         'Content-Type': 'application/json',

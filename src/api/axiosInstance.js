@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 export const apiUSer = axios.create({
-    baseURL: process.env.REACT_APP_API_URL_USER,
+    baseURL: 'https://form-register-back.vercel.app/api',
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
 export const apiPost = axios.create({
-    baseURL: process.env.REACT_APP_API_URL_POST,
+    baseURL: 'http://localhost:5001',
     headers: {
         'Content-Type': 'application/json',
     },

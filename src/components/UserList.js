@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getAllUsers, deleteUser } from '../api/userService';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
+import '../styles/UserList.css';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -47,55 +48,96 @@ const UserList = () => {
 
     if (loading) {
         return (
-            <div style={{ padding: '20px', textAlign: 'center' }}>
+            <div className="spinner-container">
                 <div className="spinner"></div>
             </div>
         );
     }
 
     return (
-        <div className='user-list'>
-            <h2>Liste des utilisateurs</h2>
-            <div className="user-cards-container">
-                {users.length > 0 ? (
-                    users.map((user) => (
-                        <div className="user-card" key={user.id}>
-                            <div className="name">
-                                {user.firstname || user.nom} {user.lastname || user.prenom}
-                            </div>
-                            <div className="user-info">
-                                <label>Date de naissance:</label>
-                                <div className="data">{user.birthdate || user.dateNaissance}</div>
-                            </div>
-                            <div className="user-info">
-                                <label>Email:</label>
-                                <div className="data">{user.email}</div>
-                            </div>
-                            <div className="user-info">
-                                <label>Ville:</label>
-                                <div className="data">{user.city || user.ville}</div>
-                            </div>
-                            <div className="user-info">
-                                <label>Code postal:</label>
-                                <div className="data">{user.postal_code || user.codePostal}</div>
-                            </div>
-                            {isAdmin && user.email !== currentUserEmail && (
-                                <button
-                                    className="delete-btn"
-                                    onClick={() => handleDelete(user.id)}
-                                    aria-label={`Supprimer ${user.firstname || user.nom}`}
-                                >
-                                    x
-                              </button>
-                            )}
-                        </div>
-                    ))
+        <div className="user-list">
+            {isAdmin ? (
+                users.length > 0 ? (
+                    <>
+                        <h2>Liste des utilisateurs</h2>
+                        <table className="user-table">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Date de naissance</th>
+                                    <th>Email</th>
+                                    <th>Ville</th>
+                                    <th>Code postal</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {users.map(user => (
+                                    <tr key={user.id} className={user.email === currentUserEmail ? "current-user-row" : ""}>
+                                        <td>{user.lastname}</td>
+                                        <td>{user.firstname}</td>
+                                        <td>{user.birthdate}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.city || user.ville}</td>
+                                        <td>{user.postal_code || user.codePostal}</td>
+                                        <td>
+                                            {user.email !== currentUserEmail && (
+                                                <button
+                                                    className="delete-btn"
+                                                    onClick={() => handleDelete(user.id)}
+                                                    aria-label={`Supprimer ${user.firstname || user.nom}`}
+                                                >
+                                                    <img
+                                                        width={20}
+                                                        src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png"
+                                                        alt="Supprimer"
+                                                        className="trash-icon"
+                                                    />
+                                                </button>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </>
                 ) : (
                     <p>Aucun utilisateur trouvé.</p>
-                )}
-            </div>
+                )
+            ) : (
+                users.length > 0 ? (
+                    users
+                        .filter(user => user.email === currentUserEmail)
+                        .map(user => (
+                            <div className="user-card" key={user.id}>
+                                <div className="name">
+                                    {user.firstname || user.nom} {user.lastname || user.prenom}
+                                </div>
+                                <div className="user-info">
+                                    <label>Date de naissance:</label>
+                                    <div className="data">{user.birthdate || user.dateNaissance}</div>
+                                </div>
+                                <div className="user-info">
+                                    <label>Email:</label>
+                                    <div className="data">{user.email}</div>
+                                </div>
+                                <div className="user-info">
+                                    <label>Ville:</label>
+                                    <div className="data">{user.city || user.ville}</div>
+                                </div>
+                                <div className="user-info">
+                                    <label>Code postal:</label>
+                                    <div className="data">{user.postal_code || user.codePostal}</div>
+                                </div>
+                            </div>
+                        ))
+                ) : (
+                    <p>Profil utilisateur introuvable.</p>
+                )
+            )}
         </div>
-    );
+    );      
 };
 
 export default UserList;

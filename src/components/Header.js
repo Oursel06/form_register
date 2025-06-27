@@ -1,22 +1,34 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+import '../styles/Header.css';
 
 export default function Header({ username, onLogout }) {
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const handleViewChange = (view) => {
-        navigate(`/form_register/home?view=${view}`);
+    const params = new URLSearchParams(location.search);
+    const view = params.get('view') || 'posts';
+
+    const handleViewChange = (newView) => {
+        if (newView !== view) {
+            navigate(`/form_register/home?view=${newView}`);
+        }
     };
 
     return (
-        <header>
-            <div>
-                <strong>Bienvenue {username}</strong>
-                <button onClick={onLogout}>Déconnexion</button>
+        <header className="header-container">
+            <div className="greeting">
+                Bonjour <strong>{username}</strong>
             </div>
-            <nav>
-                <button onClick={() => handleViewChange("users")}>Utilisateurs</button>
-                <button onClick={() => handleViewChange("posts")}>Posts</button>
-            </nav>
+            <div className={`nav-item ${view === 'users' ? 'active' : ''}`} onClick={() => handleViewChange("users")}>
+                Utilisateurs
+            </div>
+            <div className={`nav-item ${view === 'posts' ? 'active' : ''}`} onClick={() => handleViewChange("posts")}>
+                Posts
+            </div>
+            <button className="logout-button" onClick={onLogout}>
+                Déconnexion
+            </button>
         </header>
     );
 }

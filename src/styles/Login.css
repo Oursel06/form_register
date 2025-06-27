@@ -91,7 +91,6 @@
     margin-top: 8px;
 }
 
-/* Loader animation (if MiniLoader uses this spin animation) */
 @keyframes spin {
     0% {
         transform: rotate(0deg);

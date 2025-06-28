@@ -1,6 +1,5 @@
 import { apiPost } from "./axiosInstance";
 
-// Créer un post
 export const createPost = async (postData) => {
     const response = await apiPost.post('/posts', {
         title: postData.title,

@@ -19,7 +19,7 @@ const AddPost = () => {
         const user_id = jwtDecode(token).id;
 
         try {
-            await axios.post('http://localhost:5001/posts', {
+            await axios.post('https://form-register-back-mongo.vercel.app/posts', {
                 title,
                 description,
                 imageUrl,

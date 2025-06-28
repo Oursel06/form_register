@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { getAllPosts, deletePost } from '../api/postService';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
-import MenuPost from './MenuPost'; // 👈 Import ici
+import MenuPost from './MenuPost';
 import '../styles/PostList.css';
+
+const normalize = (str) => str.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const [currentUserId, setCurrentUserId] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -40,12 +43,16 @@ const PostList = () => {
         try {
             const token = localStorage.getItem('token');
             await deletePost(postId, token);
-            toast.success(`Post ${postId} supprimé.`);
-            setPosts(posts.filter(post => post._id !== postId));
-        } catch (error) {
+            toast.success(`Post N°${postId} supprimé.`);
+            setPosts(posts.filter(p => p._id !== postId));
+        } catch {
             toast.error("Erreur lors de la suppression du post.");
         }
     };
+
+    const filteredPosts = posts.filter(post =>
+        post.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     if (loading) {
         return (
@@ -60,11 +67,20 @@ const PostList = () => {
             <MenuPost />
             <div className="post-list-container">
                 <h2>Liste des postes</h2>
-                {posts.length === 0 ? (
+                <div className="search-wrapper">
+                    <input
+                        type="text"
+                        placeholder="Rechercher par titre…"
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                        className="search-input"
+                    />
+                </div>
+                {filteredPosts.length === 0 ? (
                     <p>Aucun post trouvé.</p>
                 ) : (
                     <div className="post-cards">
-                        {posts.map(post => (
+                            {filteredPosts.map(post => (
                             <div className="post-card" key={post._id}>
                                 <div className="post-card-header">
                                     <h3>{post.title}</h3>

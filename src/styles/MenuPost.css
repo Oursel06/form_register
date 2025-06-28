@@ -1,0 +1,32 @@
+.menu-post {
+    width: 20%;
+    padding: 0 40px;
+    min-width: 200px;
+    position: fixed;
+    box-sizing: border-box;
+    height: 100vh;
+    background-color: #c5d9ff;
+    border-right: solid 2px whitesmoke;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.menu-post h3 {
+    margin-bottom: 40px;
+    font-size: 24px;
+    color: #333;
+}
+
+.menu-post ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-post li {
+    margin: 30px 0;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.menu-post li:hover {
+    text-decoration: underline;
+}

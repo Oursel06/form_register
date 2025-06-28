@@ -1,6 +1,6 @@
 .post-list-container {
-    max-width: 900px;
-    margin: 30px auto;
+    width: 80%;
+    margin-left: 20%;
     padding: 0 15px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #222;
@@ -12,12 +12,6 @@
     font-weight: 700;
     margin-bottom: 30px;
     font-size: 1.8rem;
-}
-
-.post-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
 }
 
 .post-card {
@@ -102,6 +96,53 @@
     width: 38px;
     height: 38px;
     animation: spin 1s linear infinite;
+}
+
+.add-post-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #0079bf;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 32px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 99;
+}
+
+.add-post-button:hover {
+    background-color: #c5d9ff;
+    transform: scale(1.1);
+}
+
+.post-page-layout {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.post-list-container {
+    width: 80%;
+    padding: 20px;
+    overflow-y: auto;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.post-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.post-card {
+    width: 70%;
 }
 
 @keyframes spin {

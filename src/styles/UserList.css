@@ -1,13 +1,13 @@
 .user-list {
-    max-width: 900px;
-    margin: 30px auto;
+    width: 80%;
+    margin: 0px auto;
     padding: 0 15px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #222;
 }
 
 .user-list h2 {
-    margin-bottom: 20px;
+    margin: 40px 0;
     font-weight: 700;
     color: black;
     text-align: center;
@@ -24,13 +24,12 @@
 
 .user-table thead {
     background-color: #0079bf;
-    /* bleu accent */
     color: white;
 }
 
 .user-table th,
 .user-table td {
-    padding: 12px 15px;
+    padding: 22px 20px;
     text-align: left;
     border-bottom: 1px solid #ddd;
     font-size: 0.95rem;

@@ -5,6 +5,7 @@ import Home from './components/Home';
 import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddPost from './components/AddPost';
 
 function App() {
   const [username, setUsername] = useState(null);
@@ -23,16 +24,10 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Navigate to="/form_register/login" replace />} />
-
-        <Route
-          path="/form_register/login"
-          element={<LoginForm onLogin={handleLogin} />}
-        />
-
+        <Route path="/add-post" element={<AddPost />} />
+        <Route path="/form_register/login" element={<LoginForm onLogin={handleLogin} />} />
         <Route path="/form_register/home" element={<Home />} />
-
         <Route path="/form_register/register" element={<Formulaire />} />
-
         <Route
           path="/form_register/home"
           element={
@@ -43,7 +38,6 @@ function App() {
             )
           }
         />
-
         <Route path="*" element={<Navigate to="/form_register/login" replace />} />
       </Routes>
     </>

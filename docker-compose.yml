@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: postsdb
+
+  api:
+    build: .
+    restart: always
+    ports:
+      - "5001:5001"
+    environment:
+      - MONGODB_URL=mongodb://mongo:27017/postsdb
+      - PORT=5001
+      - FRONT_URL=http://localhost:3000
+    depends_on:
+      - mongo

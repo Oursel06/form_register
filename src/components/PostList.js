@@ -5,8 +5,6 @@ import { toast } from 'react-toastify';
 import MenuPost from './MenuPost';
 import '../styles/PostList.css';
 
-const normalize = (str) => str.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
-
 const PostList = () => {
     const [posts, setPosts] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);

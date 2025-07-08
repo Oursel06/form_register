@@ -5,6 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 import MenuPost from './MenuPost';
 import '../styles/PostList.css';
+import { useNavigate } from 'react-router-dom';
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -13,6 +14,7 @@ const PostList = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('all');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -93,7 +95,7 @@ const PostList = () => {
                                     <div className="post-card" key={post._id}>
                                         <div className="post-card-header">
                                             <h3>{post.title}</h3>
-                                            {isAdmin && post.user_id !== currentUserId && (
+                                            {(isAdmin || post.user_id === currentUserId) && (
                                                 <button
                                                     className="delete-btn-post"
                                                     onClick={() => handleDelete(post._id)}
@@ -125,7 +127,7 @@ const PostList = () => {
                 
                 <button
                     className="add-post-button"
-                    onClick={() => window.location.href = "/add-post"}
+                    onClick={() => navigate("/add-post")}
                 >
                     +
                 </button>

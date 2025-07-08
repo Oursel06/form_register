@@ -1,0 +1,151 @@
+body {
+  background-color: #f4f4f4;
+  font-family: 'Arial', monospace;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+h2 {
+  text-align: center;
+  width: 100%;
+  font-size: 24px;
+  color: #333;
+}
+
+.App {
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Formulaire */
+
+form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+h1 {
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  font-size: 24px;
+  color: #333;
+}
+
+label {
+  font-size: 14px;
+  margin-top: 20px;
+  margin-bottom: 6px;
+  display: block;
+  color: #555;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: rgb(76, 91, 175);
+  outline: none;
+  box-shadow: 0 0 5px rgb(76, 91, 175, 0.3);
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+button {
+  background-color: rgb(76, 91, 175);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+  transition: all 0.1s linear;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:hover {
+  background-color: rgb(76, 91, 175);
+}
+
+/* Liste des utilisateurs */
+
+.user-list {
+  width: 100%;
+}
+
+.user-cards-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.user-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  max-width: 400px;
+  width: 100%;
+  transition: all 0.2s linear;
+}
+
+.user-card:hover {
+  transform: scale(1.02);
+}
+
+.user-card .name {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(76, 91, 175);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.user-card .user-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.user-card .user-info label {
+  font-size: 14px;
+  color: #555;
+  text-align: left;
+}
+
+.user-card .user-info .data {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
